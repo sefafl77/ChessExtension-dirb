@@ -1,63 +1,77 @@
-# ChessExtension-dirb
-
 <p align="center">
-  <img src="assets/branding/dirbusterSync-hero.svg" alt="Sefaca F. Lukmana, dirbusterSync — Security, Software, Data, Games" width="100%">
+  <img src="assets/branding/chess-study-hero.png" alt="ChessExtension-dirb — Read the board. Learn the move. Local Stockfish guidance for bot-position study." width="100%">
 </p>
 
-<p align="center"><strong>Stockfish-assisted chess study · Chrome extension · GTK desktop widget</strong></p>
-<p align="center">
-  <a href="https://github.com/sefafl77">GitHub profile</a> ·
-  <a href="https://sefafl.online">Portfolio</a> ·
-  <a href="https://pentest.sefafl.online">HTB Pentest & BlueTeam write-ups</a>
-</p>
-<p align="center"><sub>Copyright © 2026 Sefaca F. Lukmana (@sefafl77 / dirbusterSync). All rights reserved, subject to the limited learning-use permission below.</sub></p>
-
-## ♟️ About
-
-A local chess-learning helper for studying bot positions. The extension reads the board and displays a gold Stockfish suggestion; the GTK widget controls the local API and search mode. It never plays a move for you.
+<h1 align="center">♟️ ChessExtension-dirb</h1>
+<p align="center"><strong>A clearer next move. A better learning session.</strong><br>Stockfish suggestions on your board, controlled from your desktop.</p>
+<p align="center"><code>CHROME MV3</code> &nbsp; <code>PYTHON + STOCKFISH</code> &nbsp; <code>GTK DESKTOP</code> &nbsp; <code>LOCAL API</code></p>
 
 <p align="center">
-  <img src="assets/screenshots/in-game-arrow.png" alt="Chess.com bot game with the helper's gold move arrow" width="700">
+  <a href="#preview">Preview</a> ·
+  <a href="#setup">Setup</a> ·
+  <a href="#modes">Modes</a> ·
+  <a href="#disclaimer">Disclaimer</a> ·
+  <a href="#creator">Creator</a>
 </p>
-<p align="center"><em>Suggested move on the board — the player stays in control.</em></p>
+
+---
+
+## ✨ Study the position. Play the move yourself.
+
+- **Read:** the extension retrieves the board position from Chess.com.
+- **Think:** a local Stockfish engine returns a suggested move.
+- **See:** a gold arrow appears without blocking board clicks.
+- **Control:** the desktop widget starts/stops the API and selects the search budget.
+
+> 🎓 Built for learning from **bot positions**. No automatic moves, clicks, or game-playing.
+
+<a name="preview"></a>
+
+## 📸 See it in action
 
 <p align="center">
-  <img src="assets/screenshots/bot-selection.png" alt="Chess.com bot selection screen with a suggested arrow" width="700">
-  <img src="assets/screenshots/widget-control.png" alt="Chess Helper GTK widget" width="250">
+  <a href="assets/branding/board-and-widget.png"><img src="assets/branding/board-and-widget.png" alt="Real bot-board screenshot beside the GTK widget: gold move arrow, Start/Stop controls, and analysis modes" width="100%"></a>
 </p>
-<p align="center"><sub>Chess.com account handles in the supplied screenshots are blurred.</sub></p>
 
-## ✨ Features
+**The board and the widget, side by side.** Both come from user-supplied screenshots—not a simulated product UI. Board imagery is cropped for focus; the controls retain their original appearance.
 
-- Reads the current board position from Chess.com.
-- Requests a candidate move from a local Stockfish API.
-- Shows a non-interactive arrow overlay.
-- Widget Start/Stop controls the API; four modes set the search-time budget.
+<details>
+<summary><strong>🖼️ Open the full bot-session preview</strong></summary>
+<br>
+<p align="center">
+  <a href="assets/branding/bot-session.png"><img src="assets/branding/bot-session.png" alt="Full Chess.com bot-selection view showing the helper's gold arrow; account handles blurred" width="100%"></a>
+</p>
 
-The verified browser flow is Chess.com **Play Computer** (`/play/computer`). Browser regression tests use a local fixture; Review/live extraction paths are best-effort and are not claimed as live-tested.
+[Original board screenshot](assets/screenshots/in-game-arrow.png) · [Original widget screenshot](assets/screenshots/widget-control.png) · [Redacted bot-session screenshot](assets/screenshots/bot-selection.png)
 
-## 🗂️ Project layout
+</details>
 
-| Path | Purpose |
-| --- | --- |
-| `chess_api.py` | Localhost API and persistent Stockfish engine |
-| `chess_extension/` | Chrome Manifest V3 extension and board overlay |
-| `widget/` | GTK desktop controls and process lifecycle |
-| `tests/` | API, widget, browser-fixture, and worker tests |
-| `assets/` | README banner and redacted screenshots |
+<a name="modes"></a>
 
-## 🎚️ Analysis modes
+## 🎚️ Choose your thinking time
 
-| Mode | Search budget |
-| --- | ---: |
-| 🟢 Fast | 1 second |
-| 🟡 Balanced | 3 seconds |
-| 🟠 Strong | 10 seconds |
-| 🔴 Maximum | 30 seconds |
+| 🟢 Fast | 🟡 Balanced | 🟠 Strong | 🔴 Maximum |
+| :---: | :---: | :---: | :---: |
+| **1 second** | **3 seconds** | **10 seconds** | **30 seconds** |
 
-All modes use the same Stockfish strength; only thinking time changes.
+Same Stockfish strength across all modes. The selected mode changes the search-time budget, not the engine's skill setting. Polling and queue time can add to the wait.
 
-## 🚀 Quick start (Kali/Debian)
+<a name="setup"></a>
+
+## 🚀 From zero to first arrow
+
+**You need:** Kali/Debian, Python, GTK/PyGObject, Stockfish, and Google Chrome. Node.js is only needed for the service-worker test.
+
+### 01 · Get the project
+
+```sh
+git clone https://github.com/sefafl77/ChessExtension-dirb.git
+cd ChessExtension-dirb
+```
+
+🔒 The repository is currently private. Cloning requires authorized GitHub access; a public release is planned only after development and review.
+
+### 02 · Install dependencies
 
 ```sh
 sudo apt install stockfish python3-venv python3-gi gir1.2-gtk-3.0
@@ -65,45 +79,96 @@ python3 -m venv --system-site-packages .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-1. Clone this repository.
-2. In Chrome, open `chrome://extensions` → enable **Developer mode** → **Load unpacked** → select `chess_extension/`.
-3. From the repo root, start the widget:
+### 03 · Load the extension
 
-   ```sh
-   .venv/bin/python widget/chess-helper-widget.py
-   ```
+1. Open `chrome://extensions` in Chrome.
+2. Turn on **Developer mode** → **Load unpacked**.
+3. Select this repository's **`chess_extension/`** folder.
 
-4. Open Chess.com **Play Computer**, choose a mode, and click **Start** in the widget.
-5. Confirm the arrow appears. Click **Stop** when finished.
+### 04 · Open the widget
 
-The widget launches and owns the API; do not run `chess_api.py` separately. The API binds to `127.0.0.1:8765`—do not expose it to the network. Chrome is needed for the extension; Node.js is needed for the service-worker test.
+```sh
+.venv/bin/python widget/chess-helper-widget.py
+```
 
-## 🧪 Tests
+1. Open Chess.com **Play Computer**.
+2. Select a mode → click **Start** in the widget.
+3. Look for the gold arrow → play the move yourself.
+4. Click **Stop** when finished.
+
+> 💡 The widget starts the API for you. **Do not launch `chess_api.py` separately.** Stop only controls the API process the widget owns.
+>
+> 🔐 The API uses loopback port **8765**. Do not expose it to the network. This is not a security audit or a guarantee of account safety.
+
+## 🧩 Under the hood
+
+| Component | Responsibility |
+| :--- | :--- |
+| `chess_extension/` | Page-position bridge, service worker, and arrow overlay |
+| `chess_api.py` | Local HTTP API and persistent Stockfish engine |
+| `widget/` | GTK controls, saved mode, and owned-process lifecycle |
+| `tests/` | API, widget, browser-fixture, and worker regressions |
+| `assets/` | README artwork and redacted screenshots |
+
+**Verified scope:** Chess.com `/play/computer`. Automated browser regressions use a local fixture, not a live account. Review/live extraction paths are best-effort and are **not claimed as live-tested**.
+
+<details>
+<summary><strong>🧪 Run the regression tests</strong></summary>
+<br>
 
 ```sh
 .venv/bin/python -m pytest -q tests/test_api.py tests/test_widget_core.py tests/test_widget_ui.py tests/test_extension_browser.py
 node tests/test_worker.cjs
 ```
 
-Last verified locally: **73 passed, 1 skipped**; the service-worker test passed. The browser test expects `google-chrome` on `PATH` (`CHROME_BIN` can override it). GTK/PyGObject must be installed from system packages.
+- **Last recorded local run:** 73 passed, 1 skipped; service-worker test passed.
+- Browser tests expect `google-chrome` on `PATH`; override with `CHROME_BIN` if needed.
+- GTK tests require the system GTK/PyGObject packages above.
+- These results describe local testing, not platform approval or a public-release security review.
 
-## ⚠️ Educational-use disclaimer
+</details>
 
-1. **Learning purpose:** intended for chess study and learning from bot positions; not affiliated with or endorsed by Chess.com.
-2. **Follow the rules:** do not use where outside assistance is prohibited. Check the current Chess.com terms and applicable law; you are responsible for compliance.
-3. **Account consequences:** use at your own risk. To the maximum extent allowed by law, the creator and maintainer disclaim responsibility for suspensions, bans, rating restrictions, loss of access, or other consequences resulting from use or misuse.
-4. **No warranty:** provided “as is”; there is no promise that use is permitted or that an account is safe. This wording cannot waive non-waivable legal rights or guarantee immunity from enforcement.
+<a name="disclaimer"></a>
 
-## 🧾 Credits & reuse
+## ⚠️ Educational use & account risk
 
-- **Creator:** `sefafl` · **GitHub maintainer:** `dirbusterSync`
-- Personal, non-commercial cloning/forking for chess learning is permitted if both credits, this README, and the disclaimer are retained; identify substantial changes.
-- This is limited permission, not a general open-source license. Commercial use or removal of attribution is not granted. The creator reserves the right to pursue remedies available under applicable law for unauthorized use or credit removal.
-- Copyright © 2026 Sefaca F. Lukmana. Source comments/metadata also contain plaintext and encoded attribution clues; they are not copy protection or conclusive proof of ownership.
+1. **🎓 Learning only.** Intended for chess study and learning from bot positions. This project is not affiliated with, supported by, or endorsed by Chess.com.
+2. **📋 Follow the rules.** Do not use where outside assistance is prohibited, including live/rated games where platform rules forbid it. Check current terms and applicable law; compliance is your responsibility.
+3. **🚫 Suspensions and bans.** Use at your own risk. To the maximum extent permitted by law, the creator and maintainer disclaim responsibility for account suspension, bans, rating restrictions, loss of access, or other consequences arising from use or misuse.
+4. **🛡️ No account-safety promise.** Provided **“as is,” without warranty**. This notice does not guarantee permitted use, override non-waivable legal rights, or prevent platform enforcement.
 
-## 🔒 Privacy & status
+## 🧾 Clone, fork & give credit
 
-- The repository is private during development and review; a public release may follow later.
-- `main` is protected against force-push and deletion; authorized users can still make normal commits.
-- Portfolio: [sefafl.online](https://sefafl.online) · HTB write-ups: [pentest.sefafl.online](https://pentest.sefafl.online) · GitHub: [@sefafl77](https://github.com/sefafl77).
-- Chess.com interface elements belong to their respective owners; this project is independent. Personal settings, browser profiles, logs, credentials, keys, and backups are not included.
+1. **✅ Limited learning-use permission:** personal, non-commercial cloning/forking for chess learning is permitted, subject to these conditions.
+2. **🏷️ Keep both credits:** retain **`sefafl`** and **`dirbusterSync`**, this README, and its disclaimer in your copy.
+3. **📝 Mark your changes:** identify substantial modifications. Do not present the original project as your own work.
+4. **📌 Rights reserved:** commercial use and attribution removal are not granted. This is limited permission—not a general open-source license. The creator reserves remedies available under applicable law for unauthorized use or credit removal.
+
+Source comments and metadata include plaintext and encoded attribution clues. They do not change behavior; they are **not copy protection or conclusive proof of ownership**.
+
+<a name="creator"></a>
+
+## 👤 Creator & credits
+
+**Sefaca F. Lukmana** · creator **`sefafl`**<br>
+GitHub maintainer **`dirbusterSync`** · **[@sefafl77](https://github.com/sefafl77)**
+
+| 🌐 Portfolio | 🧪 Pentest & BlueTeam write-ups | 💻 GitHub |
+| :--- | :--- | :--- |
+| [**sefafl.online**](https://sefafl.online) | [**pentest.sefafl.online**](https://pentest.sefafl.online) | [**github.com/sefafl77**](https://github.com/sefafl77) |
+
+<details>
+<summary><strong>🔒 Privacy, third-party assets & repository status</strong></summary>
+<br>
+
+- **Private during development/review.** No public-release security clearance is claimed.
+- `main` is protected against force-push and deletion; authorized writers can still create normal commits.
+- Screenshot handles are blurred or excluded by cropping. Personal settings, browser profiles, credentials, keys, logs, and backups are not included.
+- Chess.com interface elements and marks belong to their respective owners. Stockfish and other dependencies retain their respective licenses and credits; the project copyright notice does not replace them.
+
+</details>
+
+---
+
+<p align="center"><strong>Study with intent. Play for yourself.</strong></p>
+<p align="center">Copyright © 2026 Sefaca F. Lukmana · sefafl<br>Maintained by dirbusterSync · All rights reserved, subject to the limited permission above.</p>

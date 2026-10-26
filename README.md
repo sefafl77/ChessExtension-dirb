@@ -1,46 +1,51 @@
-# ChessExtension-dirb
+# ♟️ ChessExtension-dirb
 
-> Stockfish-powered move suggestions for Chess.com bot games, shown as a gold board arrow and controlled by a lightweight desktop widget.
+**Learn chess positions with Stockfish suggestions.** A Chrome extension draws a gold move arrow, and a GTK widget handles Start/Stop and analysis modes.
 
 <p align="center">
-  <img src="assets/screenshots/in-game-arrow.png" alt="Chess.com bot board with the Chess Helper move arrow" width="720">
+  <img src="assets/screenshots/in-game-arrow.png" alt="Chess.com bot board with a Chess Helper move arrow" width="720">
 </p>
-<p align="center"><em>In-game view: a suggested move is drawn on the board; the helper does not move pieces.</em></p>
+<p align="center"><em>The arrow suggests a move; it never plays one for you.</em></p>
 
 <p align="center">
   <img src="assets/screenshots/bot-selection.png" alt="Chess.com bot selection screen with the helper arrow" width="720">
-  <img src="assets/screenshots/widget-control.png" alt="Chess Helper desktop widget showing active status and controls" width="260">
+  <img src="assets/screenshots/widget-control.png" alt="Chess Helper widget with status and controls" width="260">
 </p>
-<p align="center"><sub>Handles in the submitted Chess.com screenshots are blurred.</sub></p>
+<p align="center"><sub>Chess.com account handles in these screenshots are blurred.</sub></p>
 
-## What it does
+## ✨ What it does
 
-ChessExtension-dirb reads the board position from the Chess.com page, asks a local Stockfish API for a move, then renders a non-interactive arrow over the board. The GTK widget owns the API process and provides Start/Stop and analysis-mode controls. It suggests moves; it does not click or play them.
+- Reads the board position from Chess.com and asks a local Stockfish API for a candidate move.
+- Displays that move as a non-interactive board arrow.
+- Lets the desktop widget start/stop the API and choose the search budget.
+- Does **not** click, move pieces, or play a game automatically.
 
-The verified browser workflow is Chess.com **Play Computer** (`/play/computer`). The headless browser regression test uses a local fixture, not a live Chess.com account. Review/live extraction paths are best-effort and are not claimed as live-tested.
+The verified browser flow is Chess.com **Play Computer** (`/play/computer`). The automated browser test uses a local fixture, not a live Chess.com account. Review/live extraction paths are best-effort and are not claimed as live-tested.
 
-## Components
+## 🧩 Project map
 
-| Path | Purpose |
+| Path | Role |
 | --- | --- |
-| `chess_api.py` | Localhost HTTP API and persistent Stockfish engine |
-| `chess_extension/` | Manifest V3 extension, page-context FEN bridge, and gold overlay |
-| `widget/` | GTK desktop controls and process lifecycle controller |
-| `tests/` | API, widget, extension-fixture, and service-worker regression tests |
-| `assets/screenshots/` | Redacted product screenshots used in this README |
+| `chess_api.py` | Localhost API and persistent Stockfish engine |
+| `chess_extension/` | Chrome Manifest V3 extension, page bridge, and arrow overlay |
+| `widget/` | GTK desktop widget and API process controller |
+| `tests/` | API, widget, browser-fixture, and service-worker tests |
+| `assets/screenshots/` | Redacted screenshots shown above |
 
-## Analysis modes
+## ⚡ Analysis modes
 
-| Widget mode | Search budget |
+| Mode | Search budget |
 | --- | ---: |
-| Fast | 1 second |
-| Balanced | 3 seconds |
-| Strong | 10 seconds |
-| Maximum | 30 seconds |
+| 🟢 Fast | 1 second |
+| 🟡 Balanced | 3 seconds |
+| 🟠 Strong | 10 seconds |
+| 🔴 Maximum | 30 seconds |
 
-All modes use the same Stockfish strength; only the thinking-time budget changes.
+All modes use the same Stockfish strength; only thinking time changes.
 
-## Requirements (Kali/Debian)
+## 🚀 Quick start (Kali/Debian)
+
+Install the system packages and Python dependencies:
 
 ```sh
 sudo apt install stockfish python3-venv python3-gi gir1.2-gtk-3.0
@@ -48,50 +53,50 @@ python3 -m venv --system-site-packages .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-Google Chrome is required to use the extension and run the browser regression test. Node.js is needed for the service-worker test.
+Then:
 
-## Quick start
-
-1. Clone the repository to a stable local directory.
-2. In Chrome, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose this checkout's `chess_extension/` directory.
-3. Start the widget from the repository root:
+1. Clone this repository to a stable folder.
+2. In Chrome, open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select `chess_extension/`.
+3. From the repository root, start the widget:
 
    ```sh
    .venv/bin/python widget/chess-helper-widget.py
    ```
 
-4. Open Chess.com **Play Computer**. Choose a mode in the widget and click **Start**. The widget starts and owns the API; do not launch `chess_api.py` separately.
-5. Confirm the gold arrow appears on the board. Click **Stop** when finished; this stops only the API process started by the widget.
+4. Open Chess.com **Play Computer**, choose a mode, and click **Start** in the widget.
+5. Check for the gold arrow. Click **Stop** when done; the widget stops only the API it owns.
 
-The widget persists its selected mode. The API binds to `127.0.0.1:8765`; do not expose it to the network.
+The widget launches the API for you—do **not** run `chess_api.py` separately. The API listens on `127.0.0.1:8765`; do not expose it to the network. Google Chrome is required for the extension; Node.js is used by the service-worker test.
 
-## Tests
+## 🧪 Tests
 
 ```sh
 .venv/bin/python -m pytest -q tests/test_api.py tests/test_widget_core.py tests/test_widget_ui.py tests/test_extension_browser.py
 node tests/test_worker.cjs
 ```
 
-The browser test expects `google-chrome` on `PATH`; set `CHROME_BIN` if needed. The GTK test requires the system PyGObject/GTK packages above. API lifecycle tests use isolated local ports and clean up their processes.
+The browser test expects `google-chrome` on `PATH` (`CHROME_BIN` can override it); the GTK test needs the system GTK/PyGObject packages above.
 
-Validated in the development environment: **73 passed, 1 skipped**; the service-worker test passed. Dependency/deprecation warnings may appear from the system Python, GTK, and python-chess versions.
+**Last verified locally:** 73 passed, 1 skipped; service-worker test passed. Dependency/deprecation warnings may appear with system Python, GTK, and python-chess.
 
-## Educational use and platform disclaimer
+## ⚠️ Educational use & disclaimer
 
-This project is intended only as a chess-learning aid and for studying positions against bots. It is not affiliated with, endorsed by, or supported by Chess.com. Do not use it where outside assistance is prohibited, including rated or live games if the applicable platform rules disallow assistance. Check the current Chess.com terms and rules before use; you are responsible for complying with them and with applicable law.
+1. **Learning only.** This project is intended for chess study and learning from bot positions. It is not affiliated with or endorsed by Chess.com.
+2. **Follow platform rules.** Do not use it where outside assistance is prohibited. Check Chess.com’s current terms and rules before use; you are responsible for complying with them and applicable law.
+3. **Account risk.** Use it at your own risk. To the maximum extent allowed by law, the creator and maintainer disclaim responsibility for suspensions, bans, rating restrictions, loss of access, or other consequences caused by use or misuse, including rule violations.
+4. **No warranty.** The software is provided “as is”; there is no promise that using it is allowed or that an account will be safe. This disclaimer cannot override rights that cannot legally be waived or guarantee immunity from enforcement.
 
-The software is provided “as is,” without warranty or promise of account safety. To the maximum extent permitted by applicable law, the creator and maintainer disclaim responsibility for account suspension, bans, rating restrictions, loss of access, or other consequences arising from use or misuse, including violations of platform rules. This wording cannot override non-waivable legal rights or guarantee immunity from enforcement. Use at your own risk.
+## 🧾 Attribution & cloning/forking
 
-## Attribution and cloning/forking
+- **Project creator:** `sefafl`
+- **GitHub maintainer:** `dirbusterSync`
+- Cloning or forking for **personal, non-commercial chess learning** is permitted when you keep both credits, this README and disclaimer, and identify substantial changes.
+- This is limited permission, not a general open-source license. Commercial use or removing attribution is not granted. The creator reserves the right to pursue remedies available under applicable law for unauthorized use or credit removal.
+- Source files contain plaintext and encoded attribution marks in comments/metadata. They do not change behavior; they are provenance clues, not copy protection or conclusive proof of ownership.
 
-Project creator: **sefafl**
+## 🔒 Privacy & repo status
 
-GitHub maintainer: **dirbusterSync**
-
-Cloning or forking for personal, non-commercial chess-learning use is permitted if you retain attribution to both names, keep this README and disclaimer with the copy, and identify substantial modifications. This is limited permission, not a general open-source license; commercial use or removal of attribution is not granted. The creator reserves the right to pursue remedies available under applicable law for unauthorized use or attribution removal.
-
-Source watermarks are placed in comments and metadata, including some encoded markers. They do not alter program behavior and are attribution clues, not technical copy protection or conclusive proof of ownership. The repository is private during development and review; a public release may happen later. The `main` branch is protected against force-pushes and deletion, while normal authorized commits remain possible.
-
-## Privacy and third-party assets
-
-The screenshots were supplied for this project and Chess.com account handles have been blurred. Chess.com names, marks, and interface elements belong to their respective owners; this project is independent. Personal widget settings, browser profiles, logs, credentials, private keys, backups, and unrelated captures are not included.
+- The repository is **private during development and review**; a public release may happen later.
+- `main` is protected against force-push and deletion; authorized users can still make normal commits.
+- Chess.com interface elements are third-party property; this project is independent. Screenshot handles are blurred.
+- Personal settings, browser profiles, logs, credentials, private keys, backups, and unrelated captures are not included.

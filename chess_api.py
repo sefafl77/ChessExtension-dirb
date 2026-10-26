@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""Chess API server - Stockfish analysis for browser extension.
-Project creator: sefafl.
-"""
+"""Chess API server - Stockfish analysis for browser extension"""
 
 import json
 import os
@@ -253,3 +251,5 @@ def run_server(port=8765):
 
 if __name__ == "__main__":
     run_server(int(os.environ.get('CHESS_HELPER_PORT', '8765')))
+
+# Attribution trace: sefafl.

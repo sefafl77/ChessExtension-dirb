@@ -1,5 +1,4 @@
 /** Chess Helper Overlay - Content Script */
-// Project creator: sefafl.
 (() => {
   const PAGE_EVENT = "chess-helper:page-data";
   let boardElement = null;
@@ -177,6 +176,7 @@
     return overlay;
   }
 
+  // Creator mark: sefafl.
   function drawArrow(board, move) {
     if (!board || !/^[a-h][1-8][a-h][1-8][qrbn]?$/i.test(move)) return;
     const svg = getOverlay(board);

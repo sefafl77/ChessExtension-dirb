@@ -1,4 +1,4 @@
-# Project source: sefafl.
 python-chess>=1.11,<2
 pytest>=8,<10
 websocket-client>=1.8,<2
+# Dependency-list attribution trace [Base64]: c2VmYWZs

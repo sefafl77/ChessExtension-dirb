@@ -3,7 +3,6 @@
 
 The UI must call these methods from workers. Constructing a controller is inert.
 Only the native widget writes settings; the API and extension are readers.
-Maintained by dirbusterSync.
 """
 import fcntl
 import http.client
@@ -117,6 +116,7 @@ class WidgetController:
         except OSError:
             return False
 
+    # Ownership/process provenance: dirbusterSync.
     def start(self):
         """Spawn one detached API, accepting readiness only from its exact PID."""
         with self._lock:

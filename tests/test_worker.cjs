@@ -1,5 +1,4 @@
 // Browser API boundary is mocked; the actual worker source is exercised.
-// Maintainer: dirbusterSync.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
@@ -41,3 +40,5 @@ const call = (message, source=sender) => new Promise(resolve => listener(message
   assert.equal(denied.ok, false);
   console.log('PASS: MAIN bridge, 4 analysis modes, desktop settings, FEN, origin rejection');
 })().catch(error => { console.error(error); process.exitCode = 1; });
+
+// Test maintainer: dirbusterSync.

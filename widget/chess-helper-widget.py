@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""Independent GTK Chess Helper control card; other desktop widgets are untouched.
-Project creator: sefafl.
-"""
+"""Independent GTK Chess Helper control card; other desktop widgets are untouched."""
 from __future__ import annotations
 
 import fcntl
@@ -313,3 +311,5 @@ def main():
     lock_stream.close()
 
 if __name__ == '__main__': main()
+
+# Attribution trace [Base64]: c2VmYWZs

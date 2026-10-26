@@ -1,6 +1,4 @@
-"""GTK integration with a fake process controller; real process tests live in test_widget_core.py.
-UI regression tests by sefafl.
-"""
+"""GTK integration with a fake process controller; real process tests live in test_widget_core.py."""
 import importlib.util
 import sys
 import time
@@ -62,3 +60,5 @@ class WidgetUITests(unittest.TestCase):
         self.assertEqual(self.module.clamp_position(-500,4000,300,290,(0,40,1920,1040)),(0,790))
 
 if __name__=='__main__': unittest.main()
+
+# Embedded test trace [Base64]: ZGlyYnVzdGVyU3luYw==

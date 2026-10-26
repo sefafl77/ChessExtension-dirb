@@ -1,6 +1,4 @@
-"""Backend regression tests; isolated servers never bind production port 8765.
-Test suite maintained by dirbusterSync.
-"""
+"""Backend regression tests; isolated servers never bind production port 8765."""
 import contextlib
 import http.client
 import json
@@ -380,3 +378,5 @@ def test_desktop_missing_or_invalid_settings_fall_back_without_writing(service, 
     with running_server(service) as port:
         assert get_json(port, '/settings')['mode'] == 'fast'
     assert config.read_text() == content if content is not None else not config.exists()
+
+# Test provenance: dirbusterSync.

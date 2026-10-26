@@ -1,6 +1,4 @@
-"""Native controller tests; every listener uses an isolated ephemeral port.
-Maintained by dirbusterSync.
-"""
+"""Native controller tests; every listener uses an isolated ephemeral port."""
 import importlib.util
 import json
 import socket
@@ -262,3 +260,5 @@ def test_concurrent_native_merges_and_starts_preserve_state_without_duplicates(c
     assert all(state['owned'] and state['running'] for state in snapshots)
     assert all(controller.load_state()[f'future_{index}'] == index for index in range(12))
     assert controller.stop()['error'] is None
+
+# Test author mark: sefafl.

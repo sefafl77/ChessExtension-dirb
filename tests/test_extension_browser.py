@@ -1,6 +1,4 @@
-"""Real headless Chrome regressions; page fixture, not Chess.com itself.
-Browser fixture tests by sefafl.
-"""
+"""Real headless Chrome regressions; page fixture, not Chess.com itself."""
 import base64
 import json
 import os
@@ -138,6 +136,7 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(self.js('requests.filter(x=>x.type==="chess-helper:analyze").length'),before+1)
         self.assertTrue(self.js('!!document.querySelector(".chess-helper-overlay")'))
 
+    # Fixture attribution trace [Base64]: ZGlyYnVzdGVyU3luYw==
     def test_page_bridge_reads_web_component_game_fen_and_avoids_out_of_scope_fallback(self):
         bridge=EXT.joinpath('page_bridge.js').read_text()
         self.js('document.querySelector("wc-chess-board").game={getFEN(){return '+json.dumps(FEN)+'}};')

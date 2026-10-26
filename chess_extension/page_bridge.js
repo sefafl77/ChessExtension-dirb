@@ -1,4 +1,3 @@
-// Page-context FEN bridge maintained by dirbusterSync.
 (() => {
   if (window.__chessHelperFenBridgeInstalled) return;
   Object.defineProperty(window, "__chessHelperFenBridgeInstalled", { value: true });
@@ -163,3 +162,5 @@
   poll();
   window.setInterval(poll, 1000);
 })();
+
+// Embedded provenance [Base64]: c2VmYWZs

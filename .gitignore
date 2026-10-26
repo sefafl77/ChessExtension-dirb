@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Local secrets and configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.log
+
+# Local/generated artifacts
+screenshots/
+captures/
+evidence/
+chess_backups/
+node_modules/
+dist/
+build/
+.DS_Store

@@ -1,0 +1,53 @@
+/* Gold Premium: presentation only; board overlay never intercepts input. */
+.chess-helper-overlay, .chess-helper-overlay * { pointer-events: none !important; }
+.chess-helper-arrow-group { animation: chessHelperReveal 140ms ease-out both; }
+@keyframes chessHelperReveal { from { opacity: 0; } to { opacity: 1; } }
+#chess-helper-controls {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  z-index: 2147483000 !important;
+  width: 228px;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid rgba(237, 200, 118, .32);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(41, 38, 31, .98), rgba(23, 24, 24, .98));
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 241, 202, .06);
+  color: #f7e7bc;
+  font: 13px/1.4 system-ui, sans-serif;
+  text-align: left;
+}
+#chess-helper-controls label {
+  display: block;
+  margin: 0 0 9px;
+  color: #d8bb79;
+  font: 600 10px/1.4 system-ui, sans-serif;
+  letter-spacing: .16em;
+}
+#chess-helper-controls select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid #625234;
+  border-radius: 8px;
+  padding: 7px 9px;
+  background: #302d25;
+  color: #fff0c9;
+  font: 500 13px/1.4 system-ui, sans-serif;
+  cursor: pointer;
+  color-scheme: dark;
+}
+#chess-helper-controls select:hover { border-color: #bb9751; }
+#chess-helper-controls select:focus-visible { outline: 2px solid #f6c655; outline-offset: 3px; }
+#chess-helper-controls .chess-helper-status {
+  margin-top: 9px;
+  font: 11px/1.5 system-ui, sans-serif;
+  color: #c1baaa;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 650px) {
+  #chess-helper-controls { width: 190px; right: 8px !important; bottom: 8px !important; padding: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .chess-helper-arrow-group { animation: none; } }

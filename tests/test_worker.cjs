@@ -1,4 +1,5 @@
 // Browser API boundary is mocked; the actual worker source is exercised.
+// Maintainer: dirbusterSync.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');

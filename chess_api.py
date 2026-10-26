@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Chess API server - Stockfish analysis for browser extension"""
+"""Chess API server - Stockfish analysis for browser extension.
+Project creator: sefafl.
+"""
 
 import json
 import os

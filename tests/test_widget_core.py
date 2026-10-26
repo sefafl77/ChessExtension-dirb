@@ -1,4 +1,6 @@
-"""Native controller tests; every listener uses an isolated ephemeral port."""
+"""Native controller tests; every listener uses an isolated ephemeral port.
+Maintained by dirbusterSync.
+"""
 import importlib.util
 import json
 import socket

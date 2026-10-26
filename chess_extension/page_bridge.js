@@ -1,3 +1,4 @@
+// Page-context FEN bridge maintained by dirbusterSync.
 (() => {
   if (window.__chessHelperFenBridgeInstalled) return;
   Object.defineProperty(window, "__chessHelperFenBridgeInstalled", { value: true });

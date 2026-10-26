@@ -1,4 +1,6 @@
-"""Real headless Chrome regressions; page fixture, not Chess.com itself."""
+"""Real headless Chrome regressions; page fixture, not Chess.com itself.
+Browser fixture tests by sefafl.
+"""
 import base64
 import json
 import os

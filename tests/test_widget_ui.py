@@ -1,4 +1,6 @@
-"""GTK integration with a fake process controller; real process tests live in test_widget_core.py."""
+"""GTK integration with a fake process controller; real process tests live in test_widget_core.py.
+UI regression tests by sefafl.
+"""
 import importlib.util
 import sys
 import time

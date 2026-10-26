@@ -1,4 +1,5 @@
 // MV3 service worker: inject page-context bridge and proxy local analysis.
+// Maintained by dirbusterSync.
 const ANALYZE_URL = "http://127.0.0.1:8765/analyze";
 const CHESS_PAGE = /^https:\/\/(www\.)?chess\.com\//;
 

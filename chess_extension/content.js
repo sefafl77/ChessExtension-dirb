@@ -1,4 +1,5 @@
 /** Chess Helper Overlay - Content Script */
+// Project creator: sefafl.
 (() => {
   const PAGE_EVENT = "chess-helper:page-data";
   let boardElement = null;

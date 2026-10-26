@@ -1,15 +1,44 @@
 # ChessExtension-dirb
 
-Local Chess.com bot-position helper: a Chrome extension reads the current board position, a loopback-only Python API asks Stockfish for a move, and a small GTK desktop widget starts/stops the helper and selects the analysis budget. It displays a suggested arrow; it does not play moves for you.
+> Stockfish-powered move suggestions for Chess.com bot games, surfaced as a gold board arrow and controlled by a lightweight desktop widget.
+
+<p align="center">
+  <img src="assets/screenshots/in-game-arrow.png" alt="Chess.com bot board with the Chess Helper move arrow" width="720">
+</p>
+<p align="center"><em>In-game view: a suggested move is drawn on the board; the helper does not move pieces.</em></p>
+
+<p align="center">
+  <img src="assets/screenshots/bot-selection.png" alt="Chess.com bot selection screen with the helper arrow" width="720">
+  <img src="assets/screenshots/widget-control.png" alt="Chess Helper desktop widget showing active status and controls" width="260">
+</p>
+<p align="center"><sub>Account handles in the submitted Chess.com screenshots have been blurred.</sub></p>
+
+## What it does
+
+ChessExtension-dirb reads the board position from the Chess.com page, asks a local Stockfish API for a move, then renders a non-interactive arrow over the board. The GTK widget owns the API process and provides Start/Stop and analysis-mode controls. Moves are suggestions only; the helper does not click or play moves.
+
+The verified browser workflow is Chess.com **Play Computer** (`/play/computer`). A headless browser regression test uses a local fixture, not a live Chess.com account. Review/live extraction paths are best-effort and are not claimed as live-tested.
 
 ## Components
 
-- `chess_api.py` — localhost API and persistent Stockfish engine.
-- `chess_extension/` — Manifest V3 extension, page bridge, and move overlay.
-- `widget/` — GTK control widget and owned-process controller.
-- `tests/` — API, widget, browser-fixture, and service-worker regression tests.
+| Path | Purpose |
+| --- | --- |
+| `chess_api.py` | Localhost HTTP API and persistent Stockfish engine |
+| `chess_extension/` | Manifest V3 extension, page-context FEN bridge, and gold overlay |
+| `widget/` | GTK desktop controls and process lifecycle controller |
+| `tests/` | API, widget, extension-fixture, and service-worker regression tests |
+| `assets/screenshots/` | Redacted product screenshots used in this README |
 
-The verified browser flow is Chess.com `/play/computer`. The headless browser test uses a local fixture, not a live Chess.com account. Review/live board extraction paths are best-effort and are not represented as live-tested here.
+## Analysis modes
+
+| Widget mode | Search budget |
+| --- | ---: |
+| Fast | 1 second |
+| Balanced | 3 seconds |
+| Strong | 10 seconds |
+| Maximum | 30 seconds |
+
+All modes use the same Stockfish strength; the selected mode changes the thinking-time budget.
 
 ## Requirements (Kali/Debian)
 
@@ -19,22 +48,22 @@ python3 -m venv --system-site-packages .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
-Google Chrome is needed to use the extension and to run the browser regression test. Node.js is needed for the service-worker test.
+Google Chrome is required to use the extension and run the browser regression test. Node.js is needed for the service-worker test.
 
-## Run
+## Quick start
 
-1. Clone this repository to a stable local directory.
-2. In Chrome, open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select this repository's `chess_extension/` directory.
-3. Start the desktop widget:
+1. Clone the repository to a stable local directory.
+2. In Chrome, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose this checkout's `chess_extension/` directory.
+3. Start the widget from the repository root:
 
    ```sh
    .venv/bin/python widget/chess-helper-widget.py
    ```
 
-4. Open Chess.com and go to **Play Computer**. Choose an analysis mode in the widget and click **Start**. The widget owns the API process; do not start `chess_api.py` separately.
-5. Use **Stop** in the widget when finished. This stops only the API process it started.
+4. Open Chess.com **Play Computer**. Choose a mode in the widget and click **Start**. The widget starts and owns the API; do not launch `chess_api.py` separately.
+5. Confirm the gold arrow appears on the board. Click **Stop** when finished; this stops only the API process started by the widget.
 
-The widget persists the selected mode and uses the repository's `chess_api.py` when run from this checkout. The default analysis budgets are Fast 1 s, Balanced 3 s, Strong 10 s, and Maximum 30 s. All modes use the same Stockfish engine strength.
+The widget persists its selected mode. The API binds to `127.0.0.1:8765`; it is not intended to be exposed to the network.
 
 ## Tests
 
@@ -43,8 +72,18 @@ The widget persists the selected mode and uses the repository's `chess_api.py` w
 node tests/test_worker.cjs
 ```
 
-The browser test requires `google-chrome` on `PATH`; set `CHROME_BIN` if the executable has another name. The GTK UI test needs the system GTK/PyGObject packages listed above. API lifecycle tests launch a temporary localhost server and clean it up.
+The browser test expects `google-chrome` on `PATH`; set `CHROME_BIN` if needed. The GTK test requires the system PyGObject/GTK packages above. API lifecycle tests use isolated local ports and clean up their processes.
 
-## Local data and safety
+Validated in the development environment: **73 passed, 1 skipped**; the service-worker test passed. Only dependency/deprecation warnings were reported.
 
-The extension communicates with the API only over `127.0.0.1:8765`. Personal widget settings and logs remain under the user's home directory and are not part of this repository. Keep browser profiles, credentials, private keys, screenshots, backups, and local configuration out of commits.
+## Attribution and reuse
+
+Project creator: **sefafl**
+
+GitHub maintainer: **dirbusterSync**
+
+Attribution markers are comments or display metadata only; they do not change program behavior. The repository is private and has no reuse license. Do not remove attribution when sharing authorized copies. The `main` branch is protected against force-pushes and deletion; authorized users can still make normal commits.
+
+## Privacy
+
+The screenshots were supplied for this project and the Chess.com account handles have been blurred. Personal widget settings, browser profiles, logs, credentials, private keys, backups, and unrelated captures are not included.

@@ -1,4 +1,5 @@
 /* Gold Premium: presentation only; board overlay never intercepts input. */
+/* Visual credit: sefafl. */
 .chess-helper-overlay, .chess-helper-overlay * { pointer-events: none !important; }
 .chess-helper-arrow-group { animation: chessHelperReveal 140ms ease-out both; }
 @keyframes chessHelperReveal { from { opacity: 0; } to { opacity: 1; } }

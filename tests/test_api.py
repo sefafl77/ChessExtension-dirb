@@ -1,4 +1,6 @@
-"""Backend regression tests; isolated servers never bind production port 8765."""
+"""Backend regression tests; isolated servers never bind production port 8765.
+Test suite maintained by dirbusterSync.
+"""
 import contextlib
 import http.client
 import json

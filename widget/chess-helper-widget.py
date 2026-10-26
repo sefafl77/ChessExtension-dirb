@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Independent GTK Chess Helper control card; other desktop widgets are untouched."""
+"""Independent GTK Chess Helper control card; other desktop widgets are untouched.
+Project creator: sefafl.
+"""
 from __future__ import annotations
 
 import fcntl

@@ -69,7 +69,7 @@ git clone https://github.com/sefafl77/ChessExtension-dirb.git
 cd ChessExtension-dirb
 ```
 
-🔒 The repository is currently private. Cloning requires authorized GitHub access; a public release is planned only after development and review.
+🌍 This repository is public. Public availability is not an endorsement, security audit, or guarantee of account safety; read the educational-use disclaimer before installing.
 
 ### 02 · Install dependencies
 
@@ -161,7 +161,7 @@ GitHub maintainer **`dirbusterSync`** · **[@sefafl77](https://github.com/sefafl
 <summary><strong>🔒 Privacy, third-party assets & repository status</strong></summary>
 <br>
 
-- **Private during development/review.** No public-release security clearance is claimed.
+- **Public release.** The repository is available for review and educational learning; this is not a security audit, endorsement, or claim of production readiness.
 - `main` is protected against force-push and deletion; authorized writers can still create normal commits.
 - Screenshot handles are blurred or excluded by cropping. Personal settings, browser profiles, credentials, keys, logs, and backups are not included.
 - Chess.com interface elements and marks belong to their respective owners. Stockfish and other dependencies retain their respective licenses and credits; the project copyright notice does not replace them.
